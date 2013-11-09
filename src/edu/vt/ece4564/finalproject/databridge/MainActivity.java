@@ -18,7 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class MainActivity extends FragmentActivity implements ChatInterface {
+public class MainActivity extends FragmentActivity 
+	implements ChatInterface, TerminalInterface {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -152,6 +153,16 @@ public class MainActivity extends FragmentActivity implements ChatInterface {
 	 */
 	@Override
 	public void sendMessage(String aMessage) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/*
+	 * Send a command
+	 * @see edu.vt.ece4564.finalproject.databridge.TerminalInterface#sendCommand(java.lang.String)
+	 */
+	@Override
+	public void sendCommand(String aMessage) {
 		// TODO Auto-generated method stub
 		
 	}
