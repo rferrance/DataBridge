@@ -1,0 +1,5 @@
+Authenticator with cert/key and timestamp, sent to the server which checks it's current and the logs to authenticate.
+All transmissions will be encrypted before they are sent and decrypted at the other end.  This will use something like the authentication, possibly a second algorithm using 
+the same principals (they will be synced since it was already checked that the other two are synced and they will be pulled at about the same time)
+
+Only one user can connect at a time second user can use chat but gets messages saying the other parts are unavailable.
