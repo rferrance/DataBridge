@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity 
 	implements ChatInterface, TerminalInterface {
-
+		
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -30,7 +30,7 @@ public class MainActivity extends FragmentActivity
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
-
+	String serverAddress;
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
@@ -52,7 +52,9 @@ public class MainActivity extends FragmentActivity
 		Intent intent = new Intent(this, ConnectionActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(intent, 1);
-        
+        Bundle bundle = intent.getExtras();
+        serverAddress = (String)bundle.get("result");
+        // TODO connect to server
 	}
 
 	@Override
