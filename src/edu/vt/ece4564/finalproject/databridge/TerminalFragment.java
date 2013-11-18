@@ -53,7 +53,9 @@ public class TerminalFragment extends Fragment {
 			public void onClick(View v) {
 				// TODO do checking for blank and other fun jazz
 				// Send the command using the interface
+				
 				terminalInterface.sendCommand(writeCommand.getText().toString()); 
+				writeCommand.setText("");
 			}
 		});
         return rootView;

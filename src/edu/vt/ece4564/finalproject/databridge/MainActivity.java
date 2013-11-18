@@ -52,9 +52,8 @@ public class MainActivity extends FragmentActivity
 		Intent intent = new Intent(this, ConnectionActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(intent, 1);
-        Bundle bundle = intent.getExtras();
-        serverAddress = (String)bundle.get("result");
-        // TODO connect to server
+        
+        
 	}
 
 	@Override
@@ -167,6 +166,25 @@ public class MainActivity extends FragmentActivity
 	public void sendCommand(String aMessage) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/*
+	 * Activates when connection activity finishes
+	 * @see android.support.v4.app.FragmentActivity#onActivityResult(int, int, android.content.Intent)
+	 */
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1) {
+			if(resultCode == RESULT_OK){      
+				serverAddress = data.getStringExtra("result");
+				//ChatFragment frag = (ChatFragment) mSectionsPagerAdapter.getItem(2);
+				//frag.addMessage(serverAddress);
+				// TODO connect to server
+			}
+		    if (resultCode == RESULT_CANCELED) {    
+		    	//Write your code if there's no result
+		    	//TODO anything really
+		    }
+		}
 	}
 
 }

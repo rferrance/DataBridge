@@ -65,6 +65,10 @@ ChatInterface chatInterface;
 	 */
 	public void addMessage(String newMessage) {
 		messageList.add(newMessage); // Add the message to the messagelist
-		// TODO do something to update the textview
+		viewMessage.setText("");
+		for(String S: messageList) {
+			viewMessage.append(S);
+		}
+		// TODO maybe something better idk I'm just doing this to debug
 	}
 }
