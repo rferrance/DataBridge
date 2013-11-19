@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class cli extends HttpServlet{
 	
-	String cmd = "/c dir";
+	String cmd;
 	String output = " ";
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
