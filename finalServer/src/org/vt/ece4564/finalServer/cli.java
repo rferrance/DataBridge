@@ -27,19 +27,21 @@ public class cli extends HttpServlet{
 		}
 	}
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//		resp.setContentType("text/plain");
-//		output = " ";
-//
-//		cmd = req.getParameter("cmd");
-//		String update = sendCmd(cmd);
-//		
-//		if(output == " "){
-//			resp.getWriter().write(update);
-//		}else{
-//			resp.getWriter().write(output);
-//		}
+		resp.setContentType("text/plain");
+		output = " ";
+
+		cmd = req.getParameter("cmd");
+		String update = sendCmd(cmd);
+		
+		if(output == " "){
+			resp.getWriter().write(update);
+		}else{
+			resp.getWriter().write(output);
+		}
 	}
-	
+
+	// this method sends the posted cmd to the computers CLI
+	// checks for system information before "launching" the correct terminal
 	protected String sendCmd(String command){
 		try{
 			String inputCmd;
