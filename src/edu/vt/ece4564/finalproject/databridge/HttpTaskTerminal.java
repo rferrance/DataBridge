@@ -13,14 +13,13 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-
 import android.os.AsyncTask;
 
 public class HttpTaskTerminal extends AsyncTask<String, Void, String> {
-	private TerminalFragment terminalFragment_;
+	private TerminalFragment termFrag_;
 	
-	public HttpTaskTerminal(TerminalFragment termF) {
-		terminalFragment_ = termF;
+	public HttpTaskTerminal(TerminalFragment mainTerm) {
+		termFrag_ = mainTerm;
 	}
 	
 	@Override
@@ -30,7 +29,7 @@ public class HttpTaskTerminal extends AsyncTask<String, Void, String> {
 			HttpPost request = new HttpPost(params[0]);
 			
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-			pairs.add(new BasicNameValuePair("cmd", params[1]));
+			pairs.add(new BasicNameValuePair("cmd", params[1]));	
 			
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs);
 			request.setEntity(entity);
@@ -51,7 +50,7 @@ public class HttpTaskTerminal extends AsyncTask<String, Void, String> {
 			//always close an InputStream when you are done
 			in.close();		
 			
-			return response;
+			return response;		
 		} catch (Exception e) {
 			e.printStackTrace();
 			return e.getMessage();
@@ -60,6 +59,6 @@ public class HttpTaskTerminal extends AsyncTask<String, Void, String> {
 	
 	@Override
 	protected void onPostExecute(String result) {
-		terminalFragment_.addMessage(result);
+		termFrag_.addMessage(result);
 	}
 }

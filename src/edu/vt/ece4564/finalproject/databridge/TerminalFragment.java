@@ -33,13 +33,12 @@ public class TerminalFragment extends Fragment {
 			}
 			catch(Exception e) {
 				e.printStackTrace();
-				viewCommands.setText(e.getMessage().toString());
+				viewCommands.setText(viewCommands.getText().toString() + e.getMessage() + "\n");
 			}
 		}
 	};
 	
-	private Thread t1 = new Thread(post, "post");
-	
+	private Thread t1 = new Thread(post, "post");	
 	
 	/*
 	 * This allows for the fragment to have an interface with mainactivity
@@ -74,16 +73,21 @@ public class TerminalFragment extends Fragment {
 			public void onClick(View v) {
 				// TODO do checking for blank and other fun jazz
 				// Send the command using the interface
-				
-				cmd = writeCommand.getText().toString();
-				//terminalInterface.sendCommand(cmd); 
-				viewCommands.setText(viewCommands.getText().toString() + cmd + "\n");
-				writeCommand.setText("");
-				
-				if((t1.getState() == Thread.State.NEW)){
-					t1.start();
-				}else{
-					t1.run();
+				try {
+					cmd = writeCommand.getText().toString();
+					//terminalInterface.sendCommand(cmd); 
+					viewCommands.setText(viewCommands.getText().toString() + cmd + "\n");
+					writeCommand.setText("");
+						
+					if((t1.getState() == Thread.State.NEW)){
+						t1.start();
+					}else{
+						t1.run();
+					}
+				}
+				catch(Exception e) {
+					e.printStackTrace();
+					viewCommands.setText(viewCommands.getText().toString() + e.getMessage() + "\n");
 				}
 			}
 		});
