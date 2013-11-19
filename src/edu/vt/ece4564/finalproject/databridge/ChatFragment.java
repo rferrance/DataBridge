@@ -62,14 +62,14 @@ public class ChatFragment extends Fragment {
 				if (!messageTyped.equals("")) 
 				{
 					chatInterface.sendMessage(messageTyped);
-					messageList.add("Client:" + messageTyped + "\n");
-					viewMessage.append("Client:" + messageTyped + "\n");
+					messageList.add("Client: " + messageTyped + "\n");
+					//viewMessage.append("Client: " + messageTyped + "\n");
 					
-//					viewMessage.setText("");
-//					for (String s : messageList) {
-//						viewMessage.append(s);
-//						viewMessage.append("\n");
-//					}
+					viewMessage.setText("");
+					for (String s : messageList) {
+						viewMessage.append(s);
+						viewMessage.append("\n");
+					}
 
 				}
 				writeMessage.setText("");

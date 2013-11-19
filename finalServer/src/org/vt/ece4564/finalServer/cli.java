@@ -9,22 +9,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class cli extends HttpServlet{
 	
 	String cmd;
 	String output = " ";
+	JSONArray jArray = new JSONArray();
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		resp.setContentType("text/plain");
-		output = " ";
-
-		String update = sendCmd(cmd);
+		resp.setContentType("application/json");
 		
-		if(output == " "){
-			resp.getWriter().write(update);
-		}else{
-			resp.getWriter().write(output);
+		try {
+			jArray.write(resp.getWriter());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		//resp.getWriter().write(jArray.toString());
 	}
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/plain");
@@ -38,6 +42,18 @@ public class cli extends HttpServlet{
 		}else{
 			resp.getWriter().write(output);
 		}
+		
+		JSONObject jObj = new JSONObject();
+		try {
+			jObj.put("response", output);
+			jObj.put("cmd", cmd);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			resp.getWriter().write(e.getMessage());
+		}
+		
+		jArray.put(jObj);
 	}
 
 	// this method sends the posted cmd to the computers CLI
