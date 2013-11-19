@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/messageView"
             android:layout_width="match_parent"
-            android:layout_height="174dp"
+            android:layout_height="match_parent"
             android:background="#ffffff"
             android:paddingBottom="8dip"
             android:textColor="#000000" />
