@@ -35,6 +35,11 @@ public class MainActivity extends FragmentActivity
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
+	// Fragments to be used.
+	EmulatorFragment emulFragment;
+	TerminalFragment termFragment;
+	ChatFragment chatFragment;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +57,6 @@ public class MainActivity extends FragmentActivity
 		Intent intent = new Intent(this, ConnectionActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(intent, 1);
-        
         
 	}
 
