@@ -2,24 +2,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/computermouse"
     android:orientation="vertical" >
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="92dp"
-        android:text="Start" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="43dp"
         android:text="Stop" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:text="Start" />
+
+    <Button
+        android:id="@+id/leftclick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_marginBottom="132dp"
+        android:layout_toLeftOf="@+id/button1"
+        android:text="Left" />
+
+    <Button
+        android:id="@+id/rightclick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button3"
+        android:layout_alignBottom="@+id/button3"
+        android:layout_toRightOf="@+id/button1"
+        android:text="Right" />
 
 </RelativeLayout>

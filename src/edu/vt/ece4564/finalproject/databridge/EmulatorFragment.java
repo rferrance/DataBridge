@@ -15,6 +15,8 @@ public class EmulatorFragment extends Fragment {
 EmulatorInterface emulatorInterface;
 Button startSensor;
 Button stopSensor;
+Button leftClick;
+Button rightClick;
 	/*
 	 * This allows for the fragment to have an interface with mainactivity
 	 * so that it can send chat messages
@@ -39,7 +41,9 @@ Button stopSensor;
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.emulator_fragment, container, false);
         startSensor = (Button) rootView.findViewById(R.id.button1);
-        stopSensor = (Button) rootView.findViewById(R.id.button1);
+        stopSensor = (Button) rootView.findViewById(R.id.button2);
+        leftClick = (Button) rootView.findViewById(R.id.leftclick);
+        rightClick = (Button) rootView.findViewById(R.id.rightclick);
         
         startSensor.setOnClickListener(new OnClickListener() {
 			@Override
@@ -54,6 +58,20 @@ Button stopSensor;
 			public void onClick(View v) {
 				// tell mainactivity to stop sensors
 				emulatorInterface.stopSensor(); 
+			}
+		});
+        
+        leftClick.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO something to do with clicking
+			}
+		});
+        
+        rightClick.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO something to do with clicking 
 			}
 		});
         
