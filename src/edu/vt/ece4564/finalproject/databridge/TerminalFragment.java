@@ -61,16 +61,12 @@ public class TerminalFragment extends Fragment {
 				try {
 					cmd = writeCommand.getText().toString();
 					url = getArguments().getString(server_);
-					//terminalInterface.sendCommand(cmd); 
 					viewCommands.setText(viewCommands.getText().toString() + cmd + "\n");
-					viewCommands.setText(viewCommands.getText().toString() + url + "\n");
-					
-					
 					writeCommand.setText("");
 						
 					final HttpTaskTerminal newtask = new HttpTaskTerminal(TerminalFragment.this);
 					// calls the server
-					newtask.execute("http://192.168.1.102:8080/cli", cmd);
+					newtask.execute(url, cmd);
 				}
 				catch(Exception e) {
 					e.printStackTrace();
