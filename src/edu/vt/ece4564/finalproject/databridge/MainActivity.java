@@ -90,7 +90,7 @@ public class MainActivity extends FragmentActivity
 			} else if(position == 1) {
 				fragment = new TerminalFragment();
 				Bundle args = new Bundle();
-				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+				args.putString(TerminalFragment.server_, "http://172.31.171.139:8080");
 				fragment.setArguments(args);
 			} else if (position == 2) {
 				fragment = new ChatFragment();

@@ -20,6 +20,27 @@ public class TerminalFragment extends Fragment {
 	ArrayList<String> commandList; // List of messages
 	TerminalInterface terminalInterface;
 	
+	public String cmd;
+	public static String server_ = "";
+	
+	// runnable to call async task to send cmd to server!
+	Runnable post = new Runnable() {
+		@Override
+		public void run() {
+			try{
+				final HttpTaskTerminal newtask = new HttpTaskTerminal(TerminalFragment.this);
+				newtask.execute(server_ + "/cli", "/c dir");
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				viewCommands.setText(e.getMessage().toString());
+			}
+		}
+	};
+	
+	private Thread t1 = new Thread(post, "post");
+	
+	
 	/*
 	 * This allows for the fragment to have an interface with mainactivity
 	 * so that it can send chat messages
@@ -46,7 +67,7 @@ public class TerminalFragment extends Fragment {
         commandList = new ArrayList<String>();
         writeCommand = (EditText)rootView.findViewById(R.id.editText1);
 		sendCommand = (Button) rootView.findViewById(R.id.button1);
-		viewCommands = (TextView) rootView.findViewById(R.id.textView2); // Textview for all messages
+		viewCommands = (TextView) rootView.findViewById(R.id.messageView); // Textview for all messages
 		
 		sendCommand.setOnClickListener(new OnClickListener() {
 			@Override
@@ -54,8 +75,16 @@ public class TerminalFragment extends Fragment {
 				// TODO do checking for blank and other fun jazz
 				// Send the command using the interface
 				
-				terminalInterface.sendCommand(writeCommand.getText().toString()); 
+				cmd = writeCommand.getText().toString();
+				//terminalInterface.sendCommand(cmd); 
+				viewCommands.setText(viewCommands.getText().toString() + cmd + "\n");
 				writeCommand.setText("");
+				
+				if((t1.getState() == Thread.State.NEW)){
+					t1.start();
+				}else{
+					t1.run();
+				}
 			}
 		});
         return rootView;
@@ -66,6 +95,7 @@ public class TerminalFragment extends Fragment {
 	 * Call it from mainactivity
 	 */
 	public void addMessage(String newCommand) {
+		viewCommands.setText(viewCommands.getText().toString() + newCommand +  "\n");
 		commandList.add(newCommand); // Add the message to the messagelist
 		// TODO do something to update the textview
 	}
