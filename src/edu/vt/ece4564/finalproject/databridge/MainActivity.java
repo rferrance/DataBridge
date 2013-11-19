@@ -89,8 +89,7 @@ public class MainActivity extends FragmentActivity
 			} else if(position == 1) {
 				fragment = new TerminalFragment();
 				Bundle args = new Bundle();
-				args.putInt(TerminalFragment.ARG_SECTION_NUMBER, position + 1);
-				args.putString(TerminalFragment.server_, serverAddress + "/cli");
+				args.putString(TerminalFragment.server_, "http://" + serverAddress + "/cli");
 				fragment.setArguments(args);
 			} else if (position == 2) {
 				fragment = new ChatFragment();

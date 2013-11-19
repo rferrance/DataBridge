@@ -20,10 +20,10 @@ public class TerminalFragment extends Fragment {
 	ArrayList<String> commandList; // List of messages
 	TerminalInterface terminalInterface;
 	
+	public String url;
 	public String cmd;
 	
-	public static final String ARG_SECTION_NUMBER = "section_number";
-	public static String server_ = "";
+	public static String server_;
 	
 	/*
 	 * This allows for the fragment to have an interface with mainactivity
@@ -60,15 +60,17 @@ public class TerminalFragment extends Fragment {
 				// Send the command using the interface
 				try {
 					cmd = writeCommand.getText().toString();
+					url = getArguments().getString(server_);
 					//terminalInterface.sendCommand(cmd); 
 					viewCommands.setText(viewCommands.getText().toString() + cmd + "\n");
-					viewCommands.setText(viewCommands.getText().toString() + server_ + "\n");
-					viewCommands.setText(viewCommands.getText().toString() + ARG_SECTION_NUMBER + "\n");
+					viewCommands.setText(viewCommands.getText().toString() + url + "\n");
+					
+					
 					writeCommand.setText("");
 						
 					final HttpTaskTerminal newtask = new HttpTaskTerminal(TerminalFragment.this);
 					// calls the server
-					newtask.execute("http://http://172.31.15.113:8080/cli", "/c dir");
+					newtask.execute("http://192.168.1.102:8080/cli", cmd);
 				}
 				catch(Exception e) {
 					e.printStackTrace();
