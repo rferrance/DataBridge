@@ -1,5 +1,5 @@
 package edu.vt.ece4564.finalproject.databridge;
-
+import edu.vt.ece4564.finalproject.databridge.HttpTaskTerminal;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -21,24 +21,9 @@ public class TerminalFragment extends Fragment {
 	TerminalInterface terminalInterface;
 	
 	public String cmd;
+	
+	public static final String ARG_SECTION_NUMBER = "section_number";
 	public static String server_ = "";
-	
-	// runnable to call async task to send cmd to server!
-	Runnable post = new Runnable() {
-		@Override
-		public void run() {
-			try{
-				final HttpTaskTerminal newtask = new HttpTaskTerminal(TerminalFragment.this);
-				newtask.execute(server_ + "/cli", "/c dir");
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-				viewCommands.setText(viewCommands.getText().toString() + e.getMessage() + "\n");
-			}
-		}
-	};
-	
-	private Thread t1 = new Thread(post, "post");	
 	
 	/*
 	 * This allows for the fragment to have an interface with mainactivity
@@ -77,13 +62,13 @@ public class TerminalFragment extends Fragment {
 					cmd = writeCommand.getText().toString();
 					//terminalInterface.sendCommand(cmd); 
 					viewCommands.setText(viewCommands.getText().toString() + cmd + "\n");
+					viewCommands.setText(viewCommands.getText().toString() + server_ + "\n");
+					viewCommands.setText(viewCommands.getText().toString() + ARG_SECTION_NUMBER + "\n");
 					writeCommand.setText("");
 						
-					if((t1.getState() == Thread.State.NEW)){
-						t1.start();
-					}else{
-						t1.run();
-					}
+					final HttpTaskTerminal newtask = new HttpTaskTerminal(TerminalFragment.this);
+					// calls the server
+					newtask.execute("http://http://172.31.15.113:8080/cli", "/c dir");
 				}
 				catch(Exception e) {
 					e.printStackTrace();
@@ -100,6 +85,8 @@ public class TerminalFragment extends Fragment {
 	 */
 	public void addMessage(String newCommand) {
 		viewCommands.setText(viewCommands.getText().toString() + newCommand +  "\n");
+		
+		
 		commandList.add(newCommand); // Add the message to the messagelist
 		// TODO do something to update the textview
 	}

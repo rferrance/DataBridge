@@ -1,7 +1,6 @@
 package edu.vt.ece4564.finalproject.databridge;
 
 import java.util.Locale;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -90,7 +89,8 @@ public class MainActivity extends FragmentActivity
 			} else if(position == 1) {
 				fragment = new TerminalFragment();
 				Bundle args = new Bundle();
-				args.putString(TerminalFragment.server_, "http://172.31.171.139:8080");
+				args.putInt(TerminalFragment.ARG_SECTION_NUMBER, position + 1);
+				args.putString(TerminalFragment.server_, serverAddress + "/cli");
 				fragment.setArguments(args);
 			} else if (position == 2) {
 				fragment = new ChatFragment();
