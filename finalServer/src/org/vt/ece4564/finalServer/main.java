@@ -27,10 +27,10 @@ public class main extends HttpServlet{
 	}
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/plain");
-		resp.getWriter().write("please look for terminal, desktop or filebrowser");
+		resp.getWriter().write("please look for cli, desktop or filebrowser");
 	}
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/plain");
-		resp.getWriter().write("please look for terminal, desktop or filebrowser");
+		resp.getWriter().write("please look for cli, desktop or filebrowser");
 	}
 }

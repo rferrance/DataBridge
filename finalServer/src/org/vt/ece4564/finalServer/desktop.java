@@ -16,6 +16,8 @@ public class desktop extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		//add stuff
+		resp.setContentType("text/plain");
+		resp.getWriter().write("Desktop");
 	}
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		//add stuff
