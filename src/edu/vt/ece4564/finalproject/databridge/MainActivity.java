@@ -17,9 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity 
-	implements ChatInterface, TerminalInterface {
+	implements ChatInterface, TerminalInterface, EmulatorInterface {
 		
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -176,15 +177,30 @@ public class MainActivity extends FragmentActivity
 		if (requestCode == 1) {
 			if(resultCode == RESULT_OK){      
 				serverAddress = data.getStringExtra("result");
+				Toast.makeText(getApplicationContext(), serverAddress, Toast.LENGTH_LONG).show();
 				//ChatFragment frag = (ChatFragment) mSectionsPagerAdapter.getItem(2);
 				//frag.addMessage(serverAddress);
 				// TODO connect to server
+				
+				Toast.makeText(getApplicationContext(), "Connected to: " + serverAddress, Toast.LENGTH_LONG).show();
 			}
 		    if (resultCode == RESULT_CANCELED) {    
 		    	//Write your code if there's no result
 		    	//TODO anything really
 		    }
 		}
+	}
+
+	@Override
+	public void startSensor() {
+		// TODO Auto-generated method stub
+		// Start sensor capture here
+	}
+
+	@Override
+	public void stopSensor() {
+		// TODO Auto-generated method stub
+		// Stop sensor capture here
 	}
 
 }

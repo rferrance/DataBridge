@@ -11,6 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*
+ * This class provides an activity for connecting to the server
+ * It pops up when the activity starts
+ */
 public class ConnectionActivity extends Activity {
 	private Button confirmAddress;
 	private EditText newAddress;
