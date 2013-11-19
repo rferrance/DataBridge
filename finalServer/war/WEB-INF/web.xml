@@ -19,21 +19,21 @@ id="WebApp_ID" version="3.0">
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>terminal</servlet-name>
-		<servlet-class>org.vt.ece4564.finalServer.terminal</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>terminal</servlet-name>
-		<url-pattern>/terminal</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
 		<servlet-name>desktop</servlet-name>
 		<servlet-class>org.vt.ece4564.finalServer.desktop</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>desktop</servlet-name>
 		<url-pattern>/desktop</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>cli</servlet-name>
+		<servlet-class>org.vt.ece4564.finalServer.cli</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>cli</servlet-name>
+		<url-pattern>/cli</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
