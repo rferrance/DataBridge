@@ -59,6 +59,7 @@ public class ChatFragment extends Fragment {
 				// TODO do checking for blank and other fun jazz
 				// Send the message using the interface
 				String messageTyped = writeMessage.getText().toString();
+				//check for empty string before doing anything
 				if (!messageTyped.equals("")) 
 				{
 					chatInterface.sendMessage(messageTyped);

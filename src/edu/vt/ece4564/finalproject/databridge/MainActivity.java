@@ -160,8 +160,21 @@ public class MainActivity extends FragmentActivity
 	public void sendMessage(String aMessage) {
 		// TODO Auto-generated method stub
 		
+		PostTask pTask = new PostTask("http://10.0.0.5:8080/chat");
+		pTask.execute("POST",aMessage);
 	}
 	
+	/*
+	 * Receive a message
+	 * @see edu.vt.ece4564.finalproject.databridge.ChatInterface#receiveMessage(java.lang.String)
+	 */
+	@Override
+	public void receiveMessage() {
+		// TODO Auto-generated method stub
+		
+		GetTask gTask = new GetTask();
+		gTask.execute("GET");
+	}
 	/*
 	 * Send a command
 	 * @see edu.vt.ece4564.finalproject.databridge.TerminalInterface#sendCommand(java.lang.String)
