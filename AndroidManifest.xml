@@ -31,6 +31,14 @@
             	android:name="android.support.PARENT_ACTIVITY"
             	android:value="edu.vt.ece4564.finalproject.databridge.MainActivity" />
     	</activity>
+    	<activity
+        	android:name="edu.vt.ece4564.finalproject.databridge.SamplePreferenceActivity"
+        	android:label="@string/app_name"
+        	android:parentActivityName="edu.vt.ece4564.finalproject.databridge.MainActivity" >
+        	<meta-data
+            	android:name="android.support.PARENT_ACTIVITY"
+            	android:value="edu.vt.ece4564.finalproject.databridge.MainActivity" />
+    	</activity>
     </application>
 
 </manifest>
