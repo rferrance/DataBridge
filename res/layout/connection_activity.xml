@@ -14,7 +14,8 @@
         android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" >
+        android:ems="10"
+        android:text="172.31.54.231" >
 
         <requestFocus />
     </EditText>
@@ -29,7 +30,8 @@
         android:id="@+id/editText2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" />
+        android:ems="10"
+		android:text="8085"/>
 
     <Button
         android:id="@+id/button1"

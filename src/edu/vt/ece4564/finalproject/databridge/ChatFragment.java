@@ -1,13 +1,10 @@
 package edu.vt.ece4564.finalproject.databridge;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-/*
- * Fragment for chat functionality
- * Code adapted from http://adilsoomro.blogspot.com/2012/12/android-listview-with-speech-bubble.html
- */
-public class ChatFragment extends ListFragment {
+public class ChatFragment extends Fragment {
 	EditText writeMessage;
 	Button sendMessage;
 	TextView viewMessage;
 	ArrayList<String> messageList; // List of messages
 	ChatInterface chatInterface;
-	ArrayList<Message> messages;
-    AwesomeAdapter adapter;
-    EditText text;
-    static Random rand = new Random();        
-    static String sender;
 
 	/*
 	 * This allows for the fragment to have an interface with mainactivity so
@@ -59,19 +47,18 @@ public class ChatFragment extends ListFragment {
 				false);
 		messageList = new ArrayList<String>();
 		writeMessage = (EditText) rootView.findViewById(R.id.editText1);
-		sendMessage = (Button) rootView.findViewById(R.id.sendButton);
-		viewMessage = (TextView) rootView.findViewById(R.id.messageView); 
-		
-		text = (EditText) rootView.findViewById(R.id.text);
-		messages = new ArrayList<Message>();
-		adapter = new AwesomeAdapter(getActivity(), messages);
-        setListAdapter(adapter);
+		sendMessage = (Button) rootView.findViewById(R.id.button1);
+		viewMessage = (TextView) rootView.findViewById(R.id.messageView); // Textview
+																			// for
+																			// all
+																			// messages
+
 		sendMessage.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO do checking for blank and other fun jazz
 				// Send the message using the interface
-				/*String messageTyped = writeMessage.getText().toString();
+				String messageTyped = writeMessage.getText().toString();
 				//check for empty string before doing anything
 				if (!messageTyped.equals("")) 
 				{
@@ -86,8 +73,8 @@ public class ChatFragment extends ListFragment {
 					}
 
 				}
-				writeMessage.setText("");*/
-				sendMessage();
+				writeMessage.setText("");
+
 			}
 		});
 		return rootView;
@@ -104,74 +91,4 @@ public class ChatFragment extends ListFragment {
 		}
 		// TODO maybe something better idk I'm just doing this to debug
 	}
-	
-	void addNewMessage(Message m)
-    {
-            messages.add(m);
-            adapter.notifyDataSetChanged();
-            getListView().setSelection(messages.size()-1);
-    }
-	
-	public void sendMessage()
-    {
-            String newMessage = text.getText().toString().trim();
-            if(newMessage.length() > 0)
-            {
-                    text.setText("");
-                    addNewMessage(new Message(newMessage, true));
-                    new SendMessage().execute();
-            }
-    }
-	
-	private class SendMessage extends AsyncTask<Void, String, String>
-    {
-        @Override
-        protected String doInBackground(Void... params) {
-                try {
-                        Thread.sleep(2000); //simulate a network call
-                }catch (InterruptedException e) {
-                        e.printStackTrace();
-                }
-                
-                this.publishProgress(String.format("%s started writing", sender));
-                try {
-                        Thread.sleep(2000); //simulate a network call
-                }catch (InterruptedException e) {
-                        e.printStackTrace();
-                }
-                this.publishProgress(String.format("%s has entered text", sender));
-                try {
-                        Thread.sleep(3000);//simulate a network call
-                }catch (InterruptedException e) {
-                        e.printStackTrace();
-                }
-                
-                
-                return Utility.messages[rand.nextInt(Utility.messages.length-1)];
-                
-                
-        }
-        @Override
-        public void onProgressUpdate(String... v) {
-                
-                if(messages.get(messages.size()-1).isStatusMessage)//check wether we have already added a status message
-                {
-                        messages.get(messages.size()-1).setMessage(v[0]); //update the status for that
-                        adapter.notifyDataSetChanged();
-                        getListView().setSelection(messages.size()-1);
-                }
-                else{
-                        addNewMessage(new Message(true,v[0])); //add new message, if there is no existing status message
-                }
-        }
-        @Override
-        protected void onPostExecute(String text) {
-                if(messages.get(messages.size()-1).isStatusMessage)//check if there is any status message, now remove it.
-                {
-                        messages.remove(messages.size()-1);
-                }
-                
-                addNewMessage(new Message(text, false)); // add the orignal message from server.
-        }
-    }
 }

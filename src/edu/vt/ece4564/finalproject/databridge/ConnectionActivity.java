@@ -40,7 +40,6 @@ public class ConnectionActivity extends Activity {
 							+ ":" + newPort.getText().toString().trim();
 					Toast.makeText(getApplicationContext(), "Server address set.", Toast.LENGTH_LONG).show();
 					Intent returnIntent = new Intent();
-					returnIntent.putExtra("type","connect");
 					returnIntent.putExtra("result",result);
 					setResult(RESULT_OK,returnIntent);     
 					finish();
