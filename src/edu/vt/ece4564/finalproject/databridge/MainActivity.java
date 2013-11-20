@@ -3,9 +3,11 @@ package edu.vt.ece4564.finalproject.databridge;
 import java.util.Locale;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -47,25 +49,33 @@ public class MainActivity extends FragmentActivity
 	TerminalFragment termFragment;
 	ChatFragment chatFragment;
 	
+	// sensor manager for the EmulatorFragment
+	public static SensorManager sensorManager;
+	public static Context context;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		//addPreferencesFromResource(R.layout.fragmented_preferences);
+		PreferenceManager.setDefaultValues(this, R.layout.fragmented_preferences, false);
 
+		context = getApplicationContext();
+		sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+		
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
 				getSupportFragmentManager());
-
+		
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		Intent intent = new Intent(this, ConnectionActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(intent, 1);
-        
-        
 	}
 
 	@Override
@@ -101,11 +111,11 @@ public class MainActivity extends FragmentActivity
 			} else if(position == 1) {
 				fragment = new TerminalFragment();
 				Bundle args = new Bundle();
-				if(SamplePreferenceActivity.context != null) { 
-		        	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(SamplePreferenceActivity.context); 
+				if(MainActivity.context != null) { 
+		        	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.context); 
 		        	Log.d("!!!", sharedPrefs.getString("ip_preference", "NULL")); 
 		        	Log.d("!!!", sharedPrefs.getString("port_preference", "NULL")); 
-		        	serverAddress = sharedPrefs.getString( "ip_preference", serverAddress.split(":")[0]) + ":" + sharedPrefs.getString("port_preference", serverAddress.split(":")[1]); 
+		        	serverAddress = sharedPrefs.getString( "ip_preference", "") + ":" + sharedPrefs.getString("port_preference", ""); 
 		        } else { 
 		        	Log.d("!!!", "context is null"); 
 		        }

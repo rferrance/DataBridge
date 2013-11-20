@@ -16,10 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-/*
- * Fragment for chat functionality
- * Code adapted from http://adilsoomro.blogspot.com/2012/12/android-listview-with-speech-bubble.html
- */
 public class ChatFragment extends ListFragment {
 	EditText writeMessage;
 	Button sendMessage;
@@ -31,6 +27,7 @@ public class ChatFragment extends ListFragment {
     EditText text;
     static Random rand = new Random();        
     static String sender = "Server";
+
 
 	/*
 	 * This allows for the fragment to have an interface with mainactivity so
@@ -57,10 +54,10 @@ public class ChatFragment extends ListFragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.chat_fragment, container,
 				false);
-		messageList = new ArrayList<String>();
-		writeMessage = (EditText) rootView.findViewById(R.id.editText1);
-		sendMessage = (Button) rootView.findViewById(R.id.sendButton);
-		viewMessage = (TextView) rootView.findViewById(R.id.messageView); 
+		//messageList = new ArrayList<String>();
+		//writeMessage = (EditText) rootView.findViewById(R.id.editText1);
+		sendMessage = (Button) rootView.findViewById(R.id.button1);
+		//viewMessage = (TextView) rootView.findViewById(R.id.messageView); 
 		
 		text = (EditText) rootView.findViewById(R.id.text);
 		messages = new ArrayList<Message>();
@@ -68,10 +65,10 @@ public class ChatFragment extends ListFragment {
         setListAdapter(adapter);
 		sendMessage.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) { /*
 				// TODO do checking for blank and other fun jazz
 				// Send the message using the interface
-				/*String messageTyped = writeMessage.getText().toString();
+				String messageTyped = writeMessage.getText().toString();
 				//check for empty string before doing anything
 				if (!messageTyped.equals("")) 
 				{

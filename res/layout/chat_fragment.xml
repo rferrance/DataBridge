@@ -24,12 +24,12 @@
             android:textColor="@color/textFieldColor" />
 
         <Button
-            android:id="@+id/sendButton"
+            android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_margin="5sp"
             android:background="@drawable/send_button"
-            
+            android:onClick="sendMessage"
             android:paddingBottom="5sp"
             android:paddingLeft="15sp"
             android:paddingRight="15sp"

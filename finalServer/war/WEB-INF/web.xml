@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/
+javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/
+javaee/web-app_3_0.xsd"
+id="WebApp_ID" version="3.0">
+
+
+	<display-name>finalServer</display-name>
+	
+	<servlet>
+		<servlet-name>main</servlet-name>
+		<servlet-class>org.vt.ece4564.finalServer.main</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>main</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>desktop</servlet-name>
+		<servlet-class>org.vt.ece4564.finalServer.desktop</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>desktop</servlet-name>
+		<url-pattern>/desktop</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>cli</servlet-name>
+		<servlet-class>org.vt.ece4564.finalServer.cli</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>cli</servlet-name>
+		<url-pattern>/cli</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>filebrowser</servlet-name>
+		<servlet-class>org.vt.ece4564.finalServer.filebrowser</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>filebrowser</servlet-name>
+		<url-pattern>/filebrowser</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>chat</servlet-name>
+		<servlet-class>org.vt.ece4564.finalServer.chat</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>chat</servlet-name>
+		<url-pattern>/chat</url-pattern>
+	</servlet-mapping>
+</web-app>
