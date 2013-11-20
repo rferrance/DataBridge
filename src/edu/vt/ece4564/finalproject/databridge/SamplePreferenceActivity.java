@@ -77,7 +77,6 @@ public class SamplePreferenceActivity extends PreferenceActivity {
             button.setText("Save Settings");
             setListFooter(button);
             
-            
         }
     }
 
@@ -121,7 +120,7 @@ public class SamplePreferenceActivity extends PreferenceActivity {
     /**
      * This fragment shows the preferences for the second header.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    /*@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static class Prefs2Fragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -130,7 +129,7 @@ public class SamplePreferenceActivity extends PreferenceActivity {
             // Can retrieve arguments from headers XML.
             Log.i("args", "Arguments: " + getArguments());
         }
-    }
+    }*/
     
     /*
      * Called when the save preferences button is pressed

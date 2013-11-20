@@ -15,5 +15,10 @@
         <item>Yes</item> 
         <item>No</item> 
     </string-array>
+    
+    <string name="hello">Hello World, MessageActivity!</string>
+        
+    <string name="main_empty_list">There is no recent conversation, write new message
+                to start one.</string>
 
 </resources>
