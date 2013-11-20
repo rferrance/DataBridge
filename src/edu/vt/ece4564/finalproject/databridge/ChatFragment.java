@@ -30,7 +30,7 @@ public class ChatFragment extends ListFragment {
     AwesomeAdapter adapter;
     EditText text;
     static Random rand = new Random();        
-    static String sender;
+    static String sender = "Server";
 
 	/*
 	 * This allows for the fragment to have an interface with mainactivity so
@@ -127,29 +127,26 @@ public class ChatFragment extends ListFragment {
     {
         @Override
         protected String doInBackground(Void... params) {
-                try {
-                        Thread.sleep(2000); //simulate a network call
-                }catch (InterruptedException e) {
-                        e.printStackTrace();
-                }
-                
-                this.publishProgress(String.format("%s started writing", sender));
-                try {
-                        Thread.sleep(2000); //simulate a network call
-                }catch (InterruptedException e) {
-                        e.printStackTrace();
-                }
-                this.publishProgress(String.format("%s has entered text", sender));
-                try {
-                        Thread.sleep(3000);//simulate a network call
-                }catch (InterruptedException e) {
-                        e.printStackTrace();
-                }
-                
-                
-                return Utility.messages[rand.nextInt(Utility.messages.length-1)];
-                
-                
+        	try {
+                    Thread.sleep(2000); //simulate a network call
+            }catch (InterruptedException e) {
+                    e.printStackTrace();
+            }
+            
+            this.publishProgress(String.format("%s started writing", sender));
+            try {
+                    Thread.sleep(2000); //simulate a network call
+            }catch (InterruptedException e) {
+                    e.printStackTrace();
+            }
+            this.publishProgress(String.format("%s has entered text", sender));
+            try {
+                    Thread.sleep(3000);//simulate a network call
+            }catch (InterruptedException e) {
+                    e.printStackTrace();
+            }
+            
+            return Utility.messages[rand.nextInt(Utility.messages.length-1)];
         }
         @Override
         public void onProgressUpdate(String... v) {
