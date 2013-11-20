@@ -1,12 +1,14 @@
 package edu.vt.ece4564.finalproject.databridge;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -40,6 +42,7 @@ Button rightClick;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.emulator_fragment, container, false);
+        
         startSensor = (Button) rootView.findViewById(R.id.button1);
         stopSensor = (Button) rootView.findViewById(R.id.button2);
         leftClick = (Button) rootView.findViewById(R.id.leftclick);

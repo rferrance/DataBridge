@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="Connection preferences:">
+
+        <EditTextPreference
+                android:key="ip_preference"
+                android:title="Server Address"
+                android:inputType="phone"
+                android:summary="Address of the server to connect to."
+                android:dialogTitle="Server Address" />
+
+        <EditTextPreference
+                android:key="port_preference"
+                android:title="Server Port Number"
+                android:inputType="phone"
+                android:summary="Porn number of the server to connect to."
+                android:dialogTitle="Server Port Number" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

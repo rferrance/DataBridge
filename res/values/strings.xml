@@ -6,5 +6,14 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
+    <string-array name="entries_list_preference"> 
+        <item>Winter</item> 
+        <item>Desert</item> 
+    </string-array> 
+    
+    <string-array name="entryvalues_list_preference"> 
+        <item>Yes</item> 
+        <item>No</item> 
+    </string-array>
 
 </resources>

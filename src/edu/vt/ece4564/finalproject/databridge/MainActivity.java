@@ -2,13 +2,16 @@ package edu.vt.ece4564.finalproject.databridge;
 
 import java.util.Locale;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -58,6 +61,7 @@ public class MainActivity extends FragmentActivity
 		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(intent, 1);
         
+        
 	}
 
 	@Override
@@ -93,6 +97,14 @@ public class MainActivity extends FragmentActivity
 			} else if(position == 1) {
 				fragment = new TerminalFragment();
 				Bundle args = new Bundle();
+				if(SamplePreferenceActivity.context != null) { 
+		        	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(SamplePreferenceActivity.context); 
+		        	Log.d("!!!", sharedPrefs.getString("ip_preference", "NULL")); 
+		        	Log.d("!!!", sharedPrefs.getString("port_preference", "NULL")); 
+		        	serverAddress = sharedPrefs.getString( "ip_preference", serverAddress.split(":")[0]) + ":" + sharedPrefs.getString("port_preference", serverAddress.split(":")[1]); 
+		        } else { 
+		        	Log.d("!!!", "context is null"); 
+		        }
 				args.putString(TerminalFragment.server_, "http://" + serverAddress + "/cli");
 				fragment.setArguments(args);
 			} else if (position == 2) {
@@ -178,14 +190,20 @@ public class MainActivity extends FragmentActivity
 	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
-			if(resultCode == RESULT_OK){      
-				serverAddress = data.getStringExtra("result");
-				Toast.makeText(getApplicationContext(), serverAddress, Toast.LENGTH_LONG).show();
-				//ChatFragment frag = (ChatFragment) mSectionsPagerAdapter.getItem(2);
-				//frag.addMessage(serverAddress);
-				// TODO connect to server
-				
-				Toast.makeText(getApplicationContext(), "Connected to: " + serverAddress, Toast.LENGTH_LONG).show();
+			if(resultCode == RESULT_OK) {
+				if((data.getStringExtra("type") != null) &&
+						(data.getStringExtra("type").equals("connect"))) {
+					serverAddress = data.getStringExtra("result");
+					Toast.makeText(getApplicationContext(), serverAddress, Toast.LENGTH_LONG).show();
+					//ChatFragment frag = (ChatFragment) mSectionsPagerAdapter.getItem(2);
+					//frag.addMessage(serverAddress);
+					// TODO connect to server
+					
+					Toast.makeText(getApplicationContext(), "Connected to: " + serverAddress, Toast.LENGTH_LONG).show();
+				} else if((data.getStringExtra("type") != null) &&
+						(data.getStringExtra("type").equals("settings"))) {
+					// TODO maybe something
+				}
 			}
 		    if (resultCode == RESULT_CANCELED) {    
 		    	//Write your code if there's no result
@@ -204,6 +222,18 @@ public class MainActivity extends FragmentActivity
 	public void stopSensor() {
 		// TODO Auto-generated method stub
 		// Stop sensor capture here
+	}
+	
+	@Override public boolean onOptionsItemSelected(MenuItem item) {
+	// the settings option takes the user to the settings page 
+		if(item.getItemId() == R.id.action_settings) { 
+			Intent intent = new Intent(this, SamplePreferenceActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+	        startActivityForResult(intent, 1);
+			return true; 
+		} else {
+			return super.onOptionsItemSelected(item); 
+		}
 	}
 
 }
