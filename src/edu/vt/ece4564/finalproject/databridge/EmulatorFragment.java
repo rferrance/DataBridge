@@ -11,12 +11,12 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class EmulatorFragment extends Fragment {
 	
 EmulatorInterface emulatorInterface;
 Button startSensor;
-Button stopSensor;
 Button leftClick;
 Button rightClick;
 	/*
@@ -43,8 +43,7 @@ Button rightClick;
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.emulator_fragment, container, false);
         
-        startSensor = (Button) rootView.findViewById(R.id.button1);
-        stopSensor = (Button) rootView.findViewById(R.id.button2);
+        startSensor = (ToggleButton) rootView.findViewById(R.id.toggleButton1);
         leftClick = (Button) rootView.findViewById(R.id.leftclick);
         rightClick = (Button) rootView.findViewById(R.id.rightclick);
         
@@ -56,13 +55,6 @@ Button rightClick;
 			}
 		});
         
-        stopSensor.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// tell mainactivity to stop sensors
-				emulatorInterface.stopSensor(); 
-			}
-		});
         
         leftClick.setOnClickListener(new OnClickListener() {
 			@Override

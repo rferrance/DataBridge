@@ -1,6 +1,9 @@
 package edu.vt.ece4564.finalproject.databridge;
 
 import java.util.Locale;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -248,5 +252,33 @@ public class MainActivity extends FragmentActivity
 			return super.onOptionsItemSelected(item); 
 		}
 	}
-
+	
+	// When key is pressed
+	// From http://stackoverflow.com/questions/6937782/android-how-to-put-a-dialog-box-after-pressing-a-back-button
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if (keyCode == KeyEvent.KEYCODE_BACK) {
+	        exitByBackKey();
+	        return true;
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
+	 
+	// Exit the program by pressing back key
+	// From http://stackoverflow.com/questions/6937782/android-how-to-put-a-dialog-box-after-pressing-a-back-button
+	protected void exitByBackKey() {
+	    AlertDialog alertbox = new AlertDialog.Builder(this)
+	    	.setMessage("Do you want to exit the application?")
+	    	.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	
+	        // do something when the button is clicked
+	        public void onClick(DialogInterface arg0, int arg1) {
+	            finish();
+	            //close();
+	        }
+	    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+	        // do something when the button is clicked
+	        public void onClick(DialogInterface arg0, int arg1) {
+	        }
+		    }).show();
+		}
 }
