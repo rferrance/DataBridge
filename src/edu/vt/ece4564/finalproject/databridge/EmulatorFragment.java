@@ -6,16 +6,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -29,8 +34,6 @@ public class EmulatorFragment extends Fragment {
 
 	EmulatorInterface emulatorInterface;
 	Button startSensor;
-	Button leftClick;
-	Button rightClick;
 
 	/*
 	 * This allows for the fragment to have an interface with mainactivity so
@@ -58,16 +61,15 @@ public class EmulatorFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.emulator_fragment, container,
 				false);
 		
+
 		Activity a = getActivity();
-        if(a != null)
-        	a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		if (a != null)
+			a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		is_streaming_ = false;
 		outgoing_data_ = new SynchronousQueue<byte[]>();
 
 		startSensor = (ToggleButton) rootView.findViewById(R.id.toggleButton1);
-		leftClick = (Button) rootView.findViewById(R.id.leftclick);
-		rightClick = (Button) rootView.findViewById(R.id.rightclick);
 
 		startSensor.setOnClickListener(new OnClickListener() {
 			@Override
@@ -79,8 +81,67 @@ public class EmulatorFragment extends Fragment {
 					startStreaming();
 			}
 		});
+		
+		rootView.setOnTouchListener(new OnTouchListener() {
+            /*
+        	 * Method to determine if click occurs
+        	 */
+        	@Override
+        	public boolean onTouch(View v, MotionEvent ev) {
+        		final int action = ev.getAction();
+        		final int evX = (int) ev.getX();
+        		final int evY = (int) ev.getY();
+        		switch (action) {
+        		case MotionEvent.ACTION_DOWN:
+        			/*if (currentResource == R.drawable.computermouse) {
+        				nextImage = R.drawable.p2_ship_pressed;
+        			}*/
+        			break;
+        		case MotionEvent.ACTION_UP:
+        			// On the UP, we do the click action.
+        			// The hidden image (image_areas) has three different hotspots on
+        			// it.
+        			// The colors are red, blue, and yellow.
+        			// Use image_areas to determine which region the user touched.
+        			// (2)
+        			int touchColor = getHotspotColor(R.id.image_areas, evX, evY);
+        			// Compare the touchColor to the expected values.
+        			// Switch to a different image, depending on what color was touched.
+        			// Note that we use a Color Tool object to test whether the
+        			// observed color is close enough to the real color to
+        			// count as a match. We do this because colors on the screen do
+        			// not match the map exactly because of scaling and
+        			// varying pixel density.
+        			ColorTool ct = new ColorTool();
+        			int tolerance = 25;
+        			// nextImage = R.drawable.p2_ship_default;
+        			// (3)
+        			if (ct.closeMatch(Color.RED, touchColor, tolerance)) {
+        				// Do the action associated with the RED region
+        				// TODO left click action
+        				Toast.makeText(MainActivity.context, "Left Click",
+        						Toast.LENGTH_SHORT).show();
+        			} else if (ct.closeMatch(Color.GREEN, touchColor, tolerance)) {
+        				// Do the action associated with the RED region
+        				// TODO right click action
+        				Toast.makeText(MainActivity.context, "Right Click",
+        						Toast.LENGTH_SHORT).show();
+        			}else {
+        				// Color was not red or green
+        				Toast.makeText(MainActivity.context, "Click Registered",
+        						Toast.LENGTH_SHORT).show();
+        			}
+        			break;
+        		} // end switch
+        		/*if (nextImage > 0) {
+        			imageView.setImageResource(nextImage);
+        			imageView.setTag(nextImage);
+        		}*/
+        		return true;
+        	}
+        });
 
-		leftClick.setOnClickListener(new OnClickListener() {
+		/*leftClick.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(MainActivity.context, "Left Click",
@@ -94,7 +155,7 @@ public class EmulatorFragment extends Fragment {
 				Toast.makeText(MainActivity.context, "Right Click",
 						Toast.LENGTH_SHORT).show();
 			}
-		});
+		});*/
 
 		return rootView;
 	}
@@ -134,5 +195,33 @@ public class EmulatorFragment extends Fragment {
 		udp_task_.cancel(true);
 		sensor_reader_.stopReadingSensors();
 		is_streaming_ = false;
+	}
+	
+	/*
+	 * Get the color of the pixel in the overlay
+	 */
+	public int getHotspotColor(int hotspotId, int x, int y) {
+		ImageView img = (ImageView) getView().findViewById(hotspotId);
+		img.setDrawingCacheEnabled(true);
+		Bitmap hotspots = Bitmap.createBitmap(img.getDrawingCache());
+		img.setDrawingCacheEnabled(false);
+		return hotspots.getPixel(x, y);
+	}
+	
+	/*
+	 * Tool to help determine overlay color
+	 */
+	public class ColorTool {
+		
+		public boolean closeMatch(int color1, int color2, int tolerance) {
+			if ((int) Math.abs(Color.red(color1) - Color.red(color2)) > tolerance)
+				return false;
+			if ((int) Math.abs(Color.green(color1) - Color.green(color2)) > tolerance)
+				return false;
+			if ((int) Math.abs(Color.blue(color1) - Color.blue(color2)) > tolerance)
+				return false;
+			return true;
+		} // end match
+		
 	}
 }

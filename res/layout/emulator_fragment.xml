@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/computermouse"
-    android:orientation="vertical"
-    android:windowSoftInputMode="stateHidden" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/my_frame"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:focusable="true" 
+    android:focusableInTouchMode="true" >
+ 		
+    <ImageView 
+ 		android:id="@+id/image_areas"
+ 		android:layout_width="fill_parent" 
+ 		android:layout_height="fill_parent" 
+ 		android:scaleType="fitCenter"
+ 		android:visibility="invisible"
+ 		android:src="@drawable/computermouse_mask" 
+ 		/>
+    
+    <ImageView
+ 		android:id="@+id/image"
+ 		android:layout_width="fill_parent" 
+ 		android:layout_height="fill_parent" 
+ 		android:scaleType="fitCenter"
+ 		android:src="@drawable/computermouse"
+ 		/>
 
-    <Button
-        android:id="@+id/leftclick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/rightclick"
-        android:layout_alignBottom="@+id/rightclick"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="62dp"
-        android:text="Left" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="171dp"
+            android:layout_column="0"
+            android:layout_gravity="left|bottom"
+            android:layout_row="0"
+            android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/rightclick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="147dp"
-        android:layout_toRightOf="@+id/leftclick"
-        android:text="Right" />
+            <ToggleButton
+                android:id="@+id/toggleButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="77dp"
+                android:text="Sensors On" />
 
-    <ToggleButton
-        android:id="@+id/toggleButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="77dp"
-        android:text="Sensors On" />
+        </LinearLayout>
 
-</RelativeLayout>
+    
+</FrameLayout>

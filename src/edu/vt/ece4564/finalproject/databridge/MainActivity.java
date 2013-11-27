@@ -73,9 +73,9 @@ public class MainActivity extends FragmentActivity
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-		Intent intent = new Intent(this, ConnectionActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivityForResult(intent, 1);
+		//Intent intent = new Intent(this, ConnectionActivity.class);
+		//intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        //startActivityForResult(intent, 1);
 	}
 
 	@Override
