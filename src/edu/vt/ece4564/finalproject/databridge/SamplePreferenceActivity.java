@@ -77,7 +77,6 @@ public class SamplePreferenceActivity extends PreferenceActivity {
             button.setText("Save Settings");
             setListFooter(button);
             
-            
         }
     }
 
@@ -135,13 +134,10 @@ public class SamplePreferenceActivity extends PreferenceActivity {
     /*
      * Called when the save preferences button is pressed
      */
-    public void onSaveButton(View v) {
-    	//String result = newAddress.getText().toString().trim()
-		//		+ ":" + newPort.getText().toString().trim();
+    public void onSaveButton() {
 		Toast.makeText(getApplicationContext(), "Preferences saved.", Toast.LENGTH_LONG).show();
 		Intent returnIntent = new Intent();
 		returnIntent.putExtra("type","pref");
-		//returnIntent.putExtra("result",result);
 		setResult(RESULT_OK,returnIntent);     
 		finish();
     }

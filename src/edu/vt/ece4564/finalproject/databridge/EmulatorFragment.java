@@ -3,12 +3,10 @@ package edu.vt.ece4564.finalproject.databridge;
 import java.util.concurrent.SynchronousQueue;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -18,13 +16,15 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+/*
+ * Fragment for the mouse emulator allows the user to move the mouse
+ * on the server by tilting the phone.
+ */
 public class EmulatorFragment extends Fragment {
 	private boolean is_streaming_;
 
@@ -63,8 +63,10 @@ public class EmulatorFragment extends Fragment {
 		
 
 		Activity a = getActivity();
-		if (a != null)
+		// Disables rotation of the phone since it would mess up the UI and data
+		if (a != null) {
 			a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}
 
 		is_streaming_ = false;
 		outgoing_data_ = new SynchronousQueue<byte[]>();
@@ -82,6 +84,12 @@ public class EmulatorFragment extends Fragment {
 			}
 		});
 		
+		/*
+		 * Set the on touch listener so that we can do left and right
+		 * clicks by touching the corresponding UI area on the mouse
+		 * Used the idea from 
+		 * http://blahti.wordpress.com/2012/06/26/images-with-clickable-areas/
+		 */
 		rootView.setOnTouchListener(new OnTouchListener() {
             /*
         	 * Method to determine if click occurs
@@ -93,9 +101,6 @@ public class EmulatorFragment extends Fragment {
         		final int evY = (int) ev.getY();
         		switch (action) {
         		case MotionEvent.ACTION_DOWN:
-        			/*if (currentResource == R.drawable.computermouse) {
-        				nextImage = R.drawable.p2_ship_pressed;
-        			}*/
         			break;
         		case MotionEvent.ACTION_UP:
         			// On the UP, we do the click action.
@@ -133,33 +138,19 @@ public class EmulatorFragment extends Fragment {
         			}
         			break;
         		} // end switch
-        		/*if (nextImage > 0) {
-        			imageView.setImageResource(nextImage);
-        			imageView.setTag(nextImage);
-        		}*/
         		return true;
         	}
         });
 
-		/*leftClick.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(MainActivity.context, "Left Click",
-						Toast.LENGTH_SHORT).show();
-			}
-		});
-
-		rightClick.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(MainActivity.context, "Right Click",
-						Toast.LENGTH_SHORT).show();
-			}
-		});*/
-
 		return rootView;
 	}
 
+	/*
+	 * Overrides the onDestroy so that the sensors 
+	 * can be turned off since they use a massive amount
+	 * of battery power
+	 * @see android.support.v4.app.Fragment#onDestroy()
+	 */
 	@Override
 	public void onDestroy() {
 		if (sensor_reader_ != null)
@@ -174,9 +165,6 @@ public class EmulatorFragment extends Fragment {
 	// Functions============================//
 	// starts the timer and UDP task running
 	private void startStreaming() {
-
-		// requestSensorDataClear();
-
 		SharedPreferences sharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(MainActivity.context);
 
@@ -199,6 +187,8 @@ public class EmulatorFragment extends Fragment {
 	
 	/*
 	 * Get the color of the pixel in the overlay
+	 * Code used from 
+	 * http://blahti.wordpress.com/2012/06/26/images-with-clickable-areas/
 	 */
 	public int getHotspotColor(int hotspotId, int x, int y) {
 		ImageView img = (ImageView) getView().findViewById(hotspotId);
@@ -210,6 +200,8 @@ public class EmulatorFragment extends Fragment {
 	
 	/*
 	 * Tool to help determine overlay color
+	 * Code used from
+	 * http://blahti.wordpress.com/2012/06/26/images-with-clickable-areas/
 	 */
 	public class ColorTool {
 		
@@ -222,6 +214,5 @@ public class EmulatorFragment extends Fragment {
 				return false;
 			return true;
 		} // end match
-		
 	}
 }

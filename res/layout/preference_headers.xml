@@ -7,14 +7,7 @@
             android:title="Connection Preferences"
             android:summary="Preferences for connection to the server." />
 
-    <header android:fragment="edu.vt.ece4564.finalproject.databridge.SamplePreferenceActivity$Prefs2Fragment"
-            android:icon="@drawable/ic_settings_display"
-            android:title="Prefs 2"
-            android:summary="Some other preferences you can see.">
-        <!-- Arbitrary key/value pairs can be included with a header as
-             arguments to its fragment. -->
-        <extra android:name="someKey" android:value="someHeaderValue" />
-    </header>
+    
 
 
 </preference-headers>
