@@ -105,15 +105,15 @@ public class MainActivity extends FragmentActivity
 			Fragment fragment = null;
 			
 			if(position == 0) {
-				fragment = new EmulatorFragment();
-				// fragment = emulFragment;
+				//fragment = new EmulatorFragment();
+				fragment = emulFragment;
 				// Allows sending of arguements to the fragment, I'll keep it for now
 				Bundle args = new Bundle();
 				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
 				fragment.setArguments(args);
 			} else if(position == 1) {
-				fragment = new TerminalFragment();
-				//fragment = termFragment;
+				//fragment = new TerminalFragment();
+				fragment = termFragment;
 				Bundle args = new Bundle();
 				if(MainActivity.context != null) { 
 		        	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.context); 
@@ -126,8 +126,8 @@ public class MainActivity extends FragmentActivity
 				args.putString(TerminalFragment.server_, "http://" + serverAddress + "/cli");
 				fragment.setArguments(args);
 			} else if (position == 2) {
-				fragment = new ChatFragment();
-				//fragment = chatFragment;
+				//fragment = new ChatFragment();
+				fragment = chatFragment;
 				Bundle args = new Bundle();
 				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
 				fragment.setArguments(args);
@@ -237,9 +237,17 @@ public class MainActivity extends FragmentActivity
 					// TODO maybe something
 				}
 			}
+			// Settings exited
 		    if (resultCode == RESULT_CANCELED) {    
-		    	//Write your code if there's no result
-		    	//TODO anything really
+		    	if(MainActivity.context != null) { 
+		        	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.context); 
+		        	Log.d("!!!", sharedPrefs.getString("ip_preference", "NULL")); 
+		        	Log.d("!!!", sharedPrefs.getString("port_preference", "NULL")); 
+		        	serverAddress = sharedPrefs.getString( "ip_preference", "") + ":" + sharedPrefs.getString("port_preference", ""); 
+		        } else { 
+		        	Log.d("!!!", "context is null"); 
+		        }
+		    	termFragment.changeAddress("http://" + serverAddress + "/cli");
 		    }
 		}
 	}
@@ -288,12 +296,11 @@ public class MainActivity extends FragmentActivity
 	        // do something when the button is clicked
 	        public void onClick(DialogInterface arg0, int arg1) {
 	            finish();
-	            //close();
 	        }
 	    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
 	        // do something when the button is clicked
-	        public void onClick(DialogInterface arg0, int arg1) {
-	        }
+		        public void onClick(DialogInterface arg0, int arg1) {
+		        }
 		    }).show();
 		}
 }
