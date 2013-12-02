@@ -131,7 +131,8 @@ public class MainActivity extends FragmentActivity
 				//fragment = new ChatFragment();
 				fragment = chatFragment;
 				Bundle args = new Bundle();
-				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+				//args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+				args.putString(ChatFragment.server_, "http://" + serverAddress + "/chat");
 				fragment.setArguments(args);
 			}
 			return fragment;
@@ -193,7 +194,7 @@ public class MainActivity extends FragmentActivity
 	public void sendMessage(String aMessage) {
 		// TODO Auto-generated method stub
 		
-		PostTask pTask = new PostTask("http://10.0.0.5:8080/chat");
+		PostTask pTask = new PostTask("http://" + serverAddress + "/chat");
 		pTask.execute("POST",aMessage);
 	}
 	

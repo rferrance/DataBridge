@@ -26,6 +26,8 @@ public class ChatFragment extends ListFragment {
     EditText text;
     static Random rand = new Random();        
     static String sender = "Server";
+	public static String server_;
+	String url = "";
 
 
 	/*
@@ -62,9 +64,11 @@ public class ChatFragment extends ListFragment {
 		messages = new ArrayList<Message>();
 		adapter = new AwesomeAdapter(getActivity(), messages);
         setListAdapter(adapter);
+        url = getArguments().getString(server_);
 		sendMessage.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) { /*
+			public void onClick(View v) { 
+				/*
 				// TODO do checking for blank and other fun jazz
 				// Send the message using the interface
 				String messageTyped = writeMessage.getText().toString();
@@ -82,7 +86,8 @@ public class ChatFragment extends ListFragment {
 					}
 
 				}
-				writeMessage.setText("");*/
+				writeMessage.setText("");
+				*/
 				sendMessage();
 			}
 		});
@@ -115,39 +120,40 @@ public class ChatFragment extends ListFragment {
             {
                     text.setText("");
                     addNewMessage(new Message(newMessage, true));
+                    chatInterface.sendMessage(newMessage);
                     new SendMessage().execute();
             }
     }
 	
 	private class SendMessage extends AsyncTask<Void, String, String>
     {
+		GetTask gTask = new GetTask();
         @Override
         protected String doInBackground(Void... params) {
-        	try {
-                    Thread.sleep(2000); //simulate a network call
-            }catch (InterruptedException e) {
-                    e.printStackTrace();
-            }
+        	
+        	gTask.execute(url);
             
-            this.publishProgress(String.format("%s started writing", sender));
+            
+            /*this.publishProgress(String.format("%s started writing", sender));
             try {
-                    Thread.sleep(2000); //simulate a network call
+                    Thread.sleep(500); //simulate a network call
             }catch (InterruptedException e) {
                     e.printStackTrace();
             }
             this.publishProgress(String.format("%s has entered text", sender));
             try {
-                    Thread.sleep(3000);//simulate a network call
+                    Thread.sleep(500);//simulate a network call
             }catch (InterruptedException e) {
                     e.printStackTrace();
-            }
+            }*/
             
-            return Utility.messages[rand.nextInt(Utility.messages.length-1)];
+            //return Utility.messages[rand.nextInt(Utility.messages.length-1)];
+            return messages.get(messages.size()-1).toString();
         }
-        @Override
+        /*@Override
         public void onProgressUpdate(String... v) {
                 
-                if(messages.get(messages.size()-1).isStatusMessage)//check wether we have already added a status message
+                if(messages.get(messages.size()-1).isStatusMessage)//check whether we have already added a status message
                 {
                         messages.get(messages.size()-1).setMessage(v[0]); //update the status for that
                         adapter.notifyDataSetChanged();
@@ -156,7 +162,7 @@ public class ChatFragment extends ListFragment {
                 else{
                         addNewMessage(new Message(true,v[0])); //add new message, if there is no existing status message
                 }
-        }
+        }*/
         @Override
         protected void onPostExecute(String text) {
                 if(messages.get(messages.size()-1).isStatusMessage)//check if there is any status message, now remove it.
@@ -164,7 +170,14 @@ public class ChatFragment extends ListFragment {
                         messages.remove(messages.size()-1);
                 }
                 
-                addNewMessage(new Message(text, false)); // add the orignal message from server.
+                addNewMessage(new Message(text, false)); // add the original message from server.
         }
     }
+	
+	/*
+	 * Change the server address
+	 */
+	public void changeAddress(String newAddress) {
+		server_ = newAddress;
+	}
 }
