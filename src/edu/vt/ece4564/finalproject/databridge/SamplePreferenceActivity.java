@@ -71,13 +71,6 @@ public class SamplePreferenceActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         
         context = getApplicationContext();
-        // Add a button to the header list.
-        if (hasHeaders()) {
-            Button button = new Button(SamplePreferenceActivity.this);
-            button.setText("Save Settings");
-            setListFooter(button);
-            
-        }
     }
 
     

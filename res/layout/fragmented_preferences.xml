@@ -17,9 +17,16 @@
                 android:key="port_preference"
                 android:title="Server Port Number"
                 android:inputType="phone"
-                android:summary="Porn number of the server to connect to."
+                android:summary="Port number of the server to connect to."
                 android:dialogTitle="Server Port Number"
                 android:defaultValue="8085" />
+        
+        <EditTextPreference
+                android:key="auth_code"
+                android:title="Server Authentication Code"
+                android:summary="Authentication code from the server."
+                android:dialogTitle="Server Authentication Code"
+                android:defaultValue="" />
 
     </PreferenceCategory>
 

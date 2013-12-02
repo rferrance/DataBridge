@@ -61,7 +61,11 @@ public class MainActivity extends FragmentActivity
 		
 		//addPreferencesFromResource(R.layout.fragmented_preferences);
 		PreferenceManager.setDefaultValues(this, R.layout.fragmented_preferences, false);
-
+		
+		emulFragment = new EmulatorFragment();
+		termFragment = new TerminalFragment();
+		chatFragment = new ChatFragment();
+		
 		context = getApplicationContext();
 		sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 		
@@ -103,13 +107,15 @@ public class MainActivity extends FragmentActivity
 			Fragment fragment = null;
 			
 			if(position == 0) {
-				fragment = new EmulatorFragment();
+				//fragment = new EmulatorFragment();
+				fragment = emulFragment;
 				// Allows sending of arguements to the fragment, I'll keep it for now
 				Bundle args = new Bundle();
 				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
 				fragment.setArguments(args);
 			} else if(position == 1) {
-				fragment = new TerminalFragment();
+				//fragment = new TerminalFragment();
+				fragment = termFragment;
 				Bundle args = new Bundle();
 				if(MainActivity.context != null) { 
 		        	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.context); 
@@ -122,7 +128,8 @@ public class MainActivity extends FragmentActivity
 				args.putString(TerminalFragment.server_, "http://" + serverAddress + "/cli");
 				fragment.setArguments(args);
 			} else if (position == 2) {
-				fragment = new ChatFragment();
+				//fragment = new ChatFragment();
+				fragment = chatFragment;
 				Bundle args = new Bundle();
 				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
 				fragment.setArguments(args);
