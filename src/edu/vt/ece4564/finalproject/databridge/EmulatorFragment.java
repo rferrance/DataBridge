@@ -10,9 +10,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnGenericMotionListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -83,6 +85,8 @@ public class EmulatorFragment extends Fragment {
 					startStreaming();
 			}
 		});
+		
+		
 		
 		/*
 		 * Set the on touch listener so that we can do left and right

@@ -77,9 +77,7 @@ public class MainActivity extends FragmentActivity
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-		//Intent intent = new Intent(this, ConnectionActivity.class);
-		//intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        //startActivityForResult(intent, 1);
+		
 	}
 
 	@Override
@@ -107,15 +105,15 @@ public class MainActivity extends FragmentActivity
 			Fragment fragment = null;
 			
 			if(position == 0) {
-				//fragment = new EmulatorFragment();
-				fragment = emulFragment;
+				fragment = new EmulatorFragment();
+				// fragment = emulFragment;
 				// Allows sending of arguements to the fragment, I'll keep it for now
 				Bundle args = new Bundle();
 				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
 				fragment.setArguments(args);
 			} else if(position == 1) {
-				//fragment = new TerminalFragment();
-				fragment = termFragment;
+				fragment = new TerminalFragment();
+				//fragment = termFragment;
 				Bundle args = new Bundle();
 				if(MainActivity.context != null) { 
 		        	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.context); 
@@ -128,8 +126,8 @@ public class MainActivity extends FragmentActivity
 				args.putString(TerminalFragment.server_, "http://" + serverAddress + "/cli");
 				fragment.setArguments(args);
 			} else if (position == 2) {
-				//fragment = new ChatFragment();
-				fragment = chatFragment;
+				fragment = new ChatFragment();
+				//fragment = chatFragment;
 				Bundle args = new Bundle();
 				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
 				fragment.setArguments(args);
