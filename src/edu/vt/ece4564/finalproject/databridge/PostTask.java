@@ -25,7 +25,7 @@ public class PostTask extends AsyncTask<String, String, String> {
 	///////////////
 	//SET IP HERE//
 	///////////////
-	String URL = "http://172.31.170.36:8080";
+	String URL = "";
 	///////////////
 	//SET IP HERE//
 	///////////////

@@ -204,8 +204,8 @@ public class MainActivity extends FragmentActivity
 	public void receiveMessage() {
 		// TODO Auto-generated method stub
 		
-		GetTask gTask = new GetTask();
-		gTask.execute("GET");
+		GetTask gTask = new GetTask(chatFragment);
+		gTask.execute("GET", "http://"+serverAddress+"/chat");
 	}
 	/*
 	 * Send a command

@@ -55,7 +55,7 @@ public class ChatFragment extends ListFragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.chat_fragment, container,
 				false);
-		//messageList = new ArrayList<String>();
+		messageList = new ArrayList<String>();
 		//writeMessage = (EditText) rootView.findViewById(R.id.editText1);
 		sendMessage = (Button) rootView.findViewById(R.id.button1);
 		//viewMessage = (TextView) rootView.findViewById(R.id.messageView); 
@@ -99,10 +99,10 @@ public class ChatFragment extends ListFragment {
 	 */
 	public void addMessage(String newMessage) {
 		messageList.add(newMessage); // Add the message to the messagelist
-		viewMessage.setText("");
-		for (String S : messageList) {
-			viewMessage.append(S);
-		}
+		//viewMessage.setText("");
+//		for (String S : messageList) {
+//			viewMessage.append(S);
+//		}
 		// TODO maybe something better idk I'm just doing this to debug
 	}
 	
@@ -120,18 +120,18 @@ public class ChatFragment extends ListFragment {
             {
                     text.setText("");
                     addNewMessage(new Message(newMessage, true));
-                    chatInterface.sendMessage(newMessage);
+                    chatInterface.sendMessage("Client last said:"+newMessage);
                     new SendMessage().execute();
             }
     }
 	
 	private class SendMessage extends AsyncTask<Void, String, String>
     {
-		GetTask gTask = new GetTask();
+		GetTask gTask = new GetTask(ChatFragment.this);
         @Override
         protected String doInBackground(Void... params) {
         	
-        	gTask.execute(url);
+        	gTask.execute("GET",url);
             
             
             /*this.publishProgress(String.format("%s started writing", sender));
@@ -148,7 +148,14 @@ public class ChatFragment extends ListFragment {
             }*/
             
             //return Utility.messages[rand.nextInt(Utility.messages.length-1)];
-            return messages.get(messages.size()-1).toString();
+        	 if(messages.get(messages.size()-1).isStatusMessage)//check if there is any status message, now remove it.
+             {
+                     messages.remove(messages.size()-1);
+             }
+            //return messages.get(messages.size()-1).getMessage();
+        	 return "thinking....";
+            
+            
         }
         /*@Override
         public void onProgressUpdate(String... v) {

@@ -11,10 +11,17 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
+import android.widget.EditText;
 
 public class GetTask extends AsyncTask<String, String, String> {
 
 	String httpString = "try again";
+	
+	private ChatFragment chatFrag_;
+	
+	public GetTask(ChatFragment mainChat) {
+		chatFrag_ = mainChat;
+	}
 	@Override
 	protected String doInBackground(String... uri) {
 		try {
@@ -22,27 +29,30 @@ public class GetTask extends AsyncTask<String, String, String> {
 			// HttpGet request = new HttpGet(params[0]);
 			// HttpResponse result = client.execute(request);
 
-			if (uri[0] == "GET") {
-				
-				
+			if (uri[0] == "GET") 
+			{				
 					
 				HttpClient httpclient = new DefaultHttpClient();
 				HttpResponse response;
 				String responseString = null;
 				response = httpclient.execute(new HttpGet(uri[1]));
 				StatusLine statusLine = response.getStatusLine();
-				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+				if (statusLine.getStatusCode() == HttpStatus.SC_OK) 
+				{
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
 					response.getEntity().writeTo(out);
 					out.close();
 					responseString = out.toString();
-				} else {
+				} 
+				else 
+				{
 					// Closes the connection.
 					response.getEntity().getContent().close();
 					throw new IOException(statusLine.getReasonPhrase());
 				}
 				return responseString;
-			} else
+			} 
+			else
 				return "error";
 
 		} catch (Exception e) {
@@ -54,6 +64,8 @@ public class GetTask extends AsyncTask<String, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
+		if(result != null)
+			chatFrag_.addNewMessage(new Message("Server last said:" + result,false));
 		httpString = result;
 		// Do anything with response..
 	}
