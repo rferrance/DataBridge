@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity 
-	implements ChatInterface, TerminalInterface, EmulatorInterface {
+	implements ChatInterface, TerminalInterface {
 		
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -250,18 +250,6 @@ public class MainActivity extends FragmentActivity
 		    	termFragment.changeAddress("http://" + serverAddress + "/cli");
 		    }
 		}
-	}
-
-	@Override
-	public void startSensor() {
-		// TODO Auto-generated method stub
-		// Start sensor capture here
-	}
-
-	@Override
-	public void stopSensor() {
-		// TODO Auto-generated method stub
-		// Stop sensor capture here
 	}
 	
 	@Override public boolean onOptionsItemSelected(MenuItem item) {
