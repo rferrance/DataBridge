@@ -88,4 +88,11 @@ public class TerminalFragment extends Fragment {
 		commandList.add(newCommand); // Add the message to the messagelist
 		// TODO do something to update the textview
 	}
+	
+	/*
+	 * Change the server address from mainactivity
+	 */
+	public void changeAddress(String newAddress) {
+		server_ = newAddress;
+	}
 }

@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity 
-	implements ChatInterface, TerminalInterface, EmulatorInterface {
+	implements ChatInterface, TerminalInterface {
 		
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -77,9 +77,7 @@ public class MainActivity extends FragmentActivity
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-		//Intent intent = new Intent(this, ConnectionActivity.class);
-		//intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        //startActivityForResult(intent, 1);
+		
 	}
 
 	@Override
@@ -240,23 +238,20 @@ public class MainActivity extends FragmentActivity
 					// TODO maybe something
 				}
 			}
+			// Settings exited
 		    if (resultCode == RESULT_CANCELED) {    
-		    	//Write your code if there's no result
-		    	//TODO anything really
+		    	if(MainActivity.context != null) { 
+		        	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.context); 
+		        	Log.d("!!!", sharedPrefs.getString("ip_preference", "NULL")); 
+		        	Log.d("!!!", sharedPrefs.getString("port_preference", "NULL")); 
+		        	serverAddress = sharedPrefs.getString( "ip_preference", "") + ":" + sharedPrefs.getString("port_preference", ""); 
+		        } else { 
+		        	Log.d("!!!", "context is null"); 
+		        }
+		    	termFragment.changeAddress("http://" + serverAddress + "/cli");
+		    	chatFragment.changeAddress("http://" + serverAddress + "/chat");
 		    }
 		}
-	}
-
-	@Override
-	public void startSensor() {
-		// TODO Auto-generated method stub
-		// Start sensor capture here
-	}
-
-	@Override
-	public void stopSensor() {
-		// TODO Auto-generated method stub
-		// Stop sensor capture here
 	}
 	
 	@Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -291,12 +286,11 @@ public class MainActivity extends FragmentActivity
 	        // do something when the button is clicked
 	        public void onClick(DialogInterface arg0, int arg1) {
 	            finish();
-	            //close();
 	        }
 	    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
 	        // do something when the button is clicked
-	        public void onClick(DialogInterface arg0, int arg1) {
-	        }
+		        public void onClick(DialogInterface arg0, int arg1) {
+		        }
 		    }).show();
 		}
 }
