@@ -34,28 +34,9 @@ public class EmulatorFragment extends Fragment {
 	private UDPTask udp_task_;
 	private SensorReader sensor_reader_;
 
-	EmulatorInterface emulatorInterface;
 	Button startSensor;
 
-	/*
-	 * This allows for the fragment to have an interface with mainactivity so
-	 * that it can send chat messages
-	 * 
-	 * @see android.support.v4.app.Fragment#onAttach(android.app.Activity)
-	 */
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-
-		// This makes sure that the container activity has implemented
-		// the callback interface. If not, it throws an exception
-		try {
-			emulatorInterface = (EmulatorInterface) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement ServerFragmentInterface.");
-		}
-	}
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
