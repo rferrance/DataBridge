@@ -20,15 +20,7 @@ import android.os.AsyncTask;
 
 public class PostTask extends AsyncTask<String, String, String> {
 
-	String httpString = "try again";
-	
-	///////////////
-	//SET IP HERE//
-	///////////////
 	String URL = "";
-	///////////////
-	//SET IP HERE//
-	///////////////
 
 	
 	public PostTask(String url)
@@ -40,6 +32,7 @@ public class PostTask extends AsyncTask<String, String, String> {
 	protected String doInBackground(String... uri) {
 		try {
 
+			//if we aren't posing, not our job.
 			if (uri[0] == "POST") {
 
 				HttpClient client = new DefaultHttpClient();
@@ -70,8 +63,10 @@ public class PostTask extends AsyncTask<String, String, String> {
 		
 
 			} 
-			else
+			//something went wrong.
+			else{
 				return "error";
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,11 +77,7 @@ public class PostTask extends AsyncTask<String, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
-		
-		// Do anything with response..
+		//We don't need to do anything with the response.
 	}
 
-	public String getHttpString() {
-		return httpString;
-	}
 }
