@@ -2,14 +2,20 @@ package edu.vt.ece4564.finalproject.databridge;
 
 import java.util.concurrent.SynchronousQueue;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -108,14 +114,19 @@ public class EmulatorFragment extends Fragment {
         			// (3)
         			if (ct.closeMatch(Color.RED, touchColor, tolerance)) {
         				// Do the action associated with the RED region
-        				// TODO left click action
+        				new NetworkClickTask().executeOnExecutor(
+        						AsyncTask.THREAD_POOL_EXECUTOR, "left");
         				Toast.makeText(MainActivity.context, "Left Click",
         						Toast.LENGTH_SHORT).show();
+        				
         			} else if (ct.closeMatch(Color.GREEN, touchColor, tolerance)) {
         				// Do the action associated with the RED region
-        				// TODO right click action
+        				new NetworkClickTask().executeOnExecutor(
+        						AsyncTask.THREAD_POOL_EXECUTOR, "right");
         				Toast.makeText(MainActivity.context, "Right Click",
         						Toast.LENGTH_SHORT).show();
+        				
+        				
         			}else {
         				// Color was not red or green
         				Toast.makeText(MainActivity.context, "Click Registered",
@@ -137,24 +148,38 @@ public class EmulatorFragment extends Fragment {
 	 * @see android.support.v4.app.Fragment#onDestroy()
 	 */
 	@Override
-	public void onDestroy() {
-		if (sensor_reader_ != null)
+	public void onDestroy(){
+		if(sensor_reader_ != null){
 			sensor_reader_.stopReadingSensors();
-		if (udp_task_ != null)
+		}
+		if(udp_task_ != null){
 			udp_task_.cancel(true);
+		}
 		super.onDestroy();
 	}
+	@Override
+	public void onDestroyView(){
+		if (sensor_reader_ != null){
+			sensor_reader_.stopReadingSensors();
+		}
+		if (udp_task_ != null){
+			udp_task_.cancel(true);
+		}
+		super.onDestroyView();
+	}
+	
+	
 
 	// ========================================================================//
-	// ============================Helper
-	// Functions============================//
+	// ============================Helper Functions============================//
 	// starts the timer and UDP task running
-	private void startStreaming() {
+	private void startStreaming(){
 		SharedPreferences sharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(MainActivity.context);
 
 		udp_task_ = new UDPTask(outgoing_data_, sharedPrefs.getString(
-				"ip_preference", "NULL"), 2000);
+				"ip_preference", "NULL"), Integer.parseInt(sharedPrefs.getString(
+				"udp_port_preference", "NULL")));
 
 		sensor_reader_ = new SensorReader(outgoing_data_,
 				MainActivity.sensorManager);
@@ -199,5 +224,38 @@ public class EmulatorFragment extends Fragment {
 				return false;
 			return true;
 		} // end match
+	}
+}
+
+class NetworkClickTask extends AsyncTask<String, Void, Boolean>
+{
+	protected Boolean doInBackground(String... params){
+		return sendQueryString(params[0]);
+	}
+
+	protected void onPostExecute(boolean result){
+		if(!result)
+			Toast.makeText(MainActivity.context, "Click Failed",
+					Toast.LENGTH_SHORT).show();
+	}
+	
+	private boolean sendQueryString(String url){
+		HttpGet 		request;
+		HttpClient 		client = new DefaultHttpClient();
+		
+		SharedPreferences sharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(MainActivity.context);
+	    
+	    request = new HttpGet("http://" + sharedPrefs.getString(
+				"ip_preference", "NULL") + ":" + sharedPrefs.getString(
+				"port_preference", "NULL") + "/dataupdateterminal?req_click_" + url);
+	    
+		try{
+			client.execute(request);
+			return true;
+		}catch(Exception e){
+			Log.e("!!!", "NetworkTask: " + e.toString());
+		}
+		return false;
 	}
 }
