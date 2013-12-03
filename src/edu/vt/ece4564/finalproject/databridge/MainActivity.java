@@ -78,6 +78,8 @@ public class MainActivity extends FragmentActivity
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
+		Intent intent = new Intent(this, SamplePreferenceActivity.class);
+		startActivity(intent);
 	}
 
 	@Override
