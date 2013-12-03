@@ -2,8 +2,8 @@ package edu.vt.ece4564.finalproject.databridge;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 * @author Adil Soomro
 *
 */
+@SuppressLint("ResourceAsColor")
 public class AwesomeAdapter extends BaseAdapter{
         private Context mContext;
         private ArrayList<Message> mMessages;
@@ -35,7 +36,8 @@ public class AwesomeAdapter extends BaseAdapter{
         public Object getItem(int position) {                
                 return mMessages.get(position);
         }
-        @Override
+        @SuppressLint("ResourceAsColor")
+		@Override
         public View getView(int position, View convertView, ViewGroup parent) {
                 Message message = (Message) this.getItem(position);
 

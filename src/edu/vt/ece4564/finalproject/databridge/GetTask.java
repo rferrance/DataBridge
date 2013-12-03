@@ -11,12 +11,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
-import android.widget.EditText;
 
 public class GetTask extends AsyncTask<String, String, String> {
 
-	String httpString = "try again";
-	
 	private ChatFragment chatFrag_;
 	
 	public GetTask(ChatFragment mainChat) {
@@ -25,12 +22,10 @@ public class GetTask extends AsyncTask<String, String, String> {
 	@Override
 	protected String doInBackground(String... uri) {
 		try {
-			// HttpClient client = new DefaultHttpClient();
-			// HttpGet request = new HttpGet(params[0]);
-			// HttpResponse result = client.execute(request);
-
-			if (uri[0] == "GET") 
-			{				
+			
+			//if not GET, then this is not our job.
+			if (uri[0] == "GET") {
+							
 					
 				HttpClient httpclient = new DefaultHttpClient();
 				HttpResponse response;
@@ -52,8 +47,9 @@ public class GetTask extends AsyncTask<String, String, String> {
 				}
 				return responseString;
 			} 
-			else
+			else{
 				return "error";
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,16 +60,14 @@ public class GetTask extends AsyncTask<String, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
+		//if there isn't a new message, or the new message is empty somehow,
+		//do not add it to the chat fragment's messages.
 		result = result.trim();
 		if(result != null && !result.equals("")){
 			chatFrag_.addNewMessage(new Message(result,false));
 		}
-		httpString = result;
-		// Do anything with response..
 	}
 
-	public String getHttpString() {
-		return httpString;
-	}
+	
 }
 
