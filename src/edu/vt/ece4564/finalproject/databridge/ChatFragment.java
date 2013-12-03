@@ -1,12 +1,16 @@
 package edu.vt.ece4564.finalproject.databridge;
 
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +32,8 @@ public class ChatFragment extends ListFragment {
     static String sender = "Server";
 	public static String server_;
 	String url = "";
+	private Runnable runnable_;
+	private Handler handler_;
 
 
 	/*
@@ -91,6 +97,18 @@ public class ChatFragment extends ListFragment {
 				sendMessage();
 			}
 		});
+		handler_ = new Handler();
+		runnable_ = new Runnable(){
+			@Override
+		    public void run(){
+							
+				GetTask gTask = new GetTask(ChatFragment.this);
+				gTask.execute("GET",url);
+				// sets the runnable to run again in "delay_" milliseconds
+				handler_.postDelayed(this, 1000);
+		    }
+		};
+		runnable_.run();
 		return rootView;
 	}
 
@@ -120,12 +138,12 @@ public class ChatFragment extends ListFragment {
             {
                     text.setText("");
                     addNewMessage(new Message(newMessage, true));
-                    chatInterface.sendMessage("Client last said:"+newMessage);
-                    new SendMessage().execute();
+                    chatInterface.sendMessage(newMessage);
+                    //new SendMessage().execute();
             }
     }
 	
-	private class SendMessage extends AsyncTask<Void, String, String>
+	/*private class SendMessage extends AsyncTask<Void, String, String>
     {
 		GetTask gTask = new GetTask(ChatFragment.this);
         @Override
@@ -134,18 +152,18 @@ public class ChatFragment extends ListFragment {
         	gTask.execute("GET",url);
             
             
-            /*this.publishProgress(String.format("%s started writing", sender));
-            try {
-                    Thread.sleep(500); //simulate a network call
-            }catch (InterruptedException e) {
-                    e.printStackTrace();
-            }
-            this.publishProgress(String.format("%s has entered text", sender));
-            try {
-                    Thread.sleep(500);//simulate a network call
-            }catch (InterruptedException e) {
-                    e.printStackTrace();
-            }*/
+//            this.publishProgress(String.format("%s started writing", sender));
+//            try {
+//                    Thread.sleep(500); //simulate a network call
+//            }catch (InterruptedException e) {
+//                    e.printStackTrace();
+//            }
+//            this.publishProgress(String.format("%s has entered text", sender));
+//            try {
+//                    Thread.sleep(500);//simulate a network call
+//            }catch (InterruptedException e) {
+//                    e.printStackTrace();
+//            }
             
             //return Utility.messages[rand.nextInt(Utility.messages.length-1)];
         	 if(messages.get(messages.size()-1).isStatusMessage)//check if there is any status message, now remove it.
@@ -157,19 +175,19 @@ public class ChatFragment extends ListFragment {
             
             
         }
-        /*@Override
-        public void onProgressUpdate(String... v) {
-                
-                if(messages.get(messages.size()-1).isStatusMessage)//check whether we have already added a status message
-                {
-                        messages.get(messages.size()-1).setMessage(v[0]); //update the status for that
-                        adapter.notifyDataSetChanged();
-                        getListView().setSelection(messages.size()-1);
-                }
-                else{
-                        addNewMessage(new Message(true,v[0])); //add new message, if there is no existing status message
-                }
-        }*/
+//        @Override
+//        public void onProgressUpdate(String... v) {
+//                
+//                if(messages.get(messages.size()-1).isStatusMessage)//check whether we have already added a status message
+//                {
+//                        messages.get(messages.size()-1).setMessage(v[0]); //update the status for that
+//                        adapter.notifyDataSetChanged();
+//                        getListView().setSelection(messages.size()-1);
+//                }
+//                else{
+//                        addNewMessage(new Message(true,v[0])); //add new message, if there is no existing status message
+//                }
+//        }
         @Override
         protected void onPostExecute(String text) {
                 if(messages.get(messages.size()-1).isStatusMessage)//check if there is any status message, now remove it.
@@ -177,14 +195,34 @@ public class ChatFragment extends ListFragment {
                         messages.remove(messages.size()-1);
                 }
                 
-                addNewMessage(new Message(text, false)); // add the original message from server.
+                //addNewMessage(new Message(text, false)); // add the original message from server.
         }
-    }
+    }*/
 	
 	/*
 	 * Change the server address
 	 */
 	public void changeAddress(String newAddress) {
 		server_ = newAddress;
+	}
+	/*
+	 * Overrides the onDestroy so that the sensors 
+	 * can be turned off since they use a massive amount
+	 * of battery power
+	 * @see android.support.v4.app.Fragment#onDestroy()
+	 */
+	@Override
+	public void onDestroy() {
+		if(handler_ != null && runnable_ != null) {
+			handler_.removeCallbacks(runnable_);
+		}
+		super.onDestroy();
+	}
+	@Override
+	public void onDestroyView() {
+		if(handler_ != null && runnable_ != null) {
+			handler_.removeCallbacks(runnable_);
+		}
+		super.onDestroyView();
 	}
 }

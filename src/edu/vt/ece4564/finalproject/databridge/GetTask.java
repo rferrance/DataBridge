@@ -64,8 +64,10 @@ public class GetTask extends AsyncTask<String, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
-		if(result != null)
-			chatFrag_.addNewMessage(new Message("Server last said:" + result,false));
+		result = result.trim();
+		if(result != null && !result.equals("")){
+			chatFrag_.addNewMessage(new Message(result,false));
+		}
 		httpString = result;
 		// Do anything with response..
 	}
