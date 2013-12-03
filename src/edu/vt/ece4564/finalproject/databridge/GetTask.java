@@ -35,7 +35,7 @@ public class GetTask extends AsyncTask<String, String, String> {
 				HttpClient httpclient = new DefaultHttpClient();
 				HttpResponse response;
 				String responseString = null;
-				response = httpclient.execute(new HttpGet(uri[1]));
+				response = httpclient.execute(new HttpGet(uri[1]+"?app"));
 				StatusLine statusLine = response.getStatusLine();
 				if (statusLine.getStatusCode() == HttpStatus.SC_OK) 
 				{

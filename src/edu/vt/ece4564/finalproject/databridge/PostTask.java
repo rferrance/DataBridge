@@ -47,6 +47,7 @@ public class PostTask extends AsyncTask<String, String, String> {
 
 				List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 				pairs.add(new BasicNameValuePair("newMessage", uri[1]));
+				pairs.add(new BasicNameValuePair("sender", "client"));
 				
 				
 				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs);
