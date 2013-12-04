@@ -116,21 +116,14 @@ public class EmulatorFragment extends Fragment {
         				// Do the action associated with the RED region
         				new NetworkClickTask().executeOnExecutor(
         						AsyncTask.THREAD_POOL_EXECUTOR, "left");
-        				Toast.makeText(MainActivity.context, "Left Click",
-        						Toast.LENGTH_SHORT).show();
         				
         			} else if (ct.closeMatch(Color.GREEN, touchColor, tolerance)) {
         				// Do the action associated with the RED region
         				new NetworkClickTask().executeOnExecutor(
         						AsyncTask.THREAD_POOL_EXECUTOR, "right");
-        				Toast.makeText(MainActivity.context, "Right Click",
-        						Toast.LENGTH_SHORT).show();
-        				
         				
         			}else {
         				// Color was not red or green
-        				Toast.makeText(MainActivity.context, "Click Registered",
-        						Toast.LENGTH_SHORT).show();
         			}
         			break;
         		} // end switch

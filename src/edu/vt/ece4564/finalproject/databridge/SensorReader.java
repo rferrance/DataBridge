@@ -4,8 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.concurrent.SynchronousQueue;
+
+import android.content.SharedPreferences;
 import android.hardware.SensorManager;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 
@@ -109,7 +112,13 @@ public class SensorReader extends Thread
 		buffer_g_ = Gyroscope.getData();
 		buffer_m_ = Magnetometer.getData();
 		
+		String authentication = "";
+		SharedPreferences sharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(MainActivity.context);
+		authentication = sharedPrefs.getString(
+				"auth_code", "NULL");
+		
 		return new SensorData(buffer_a_[0], buffer_a_[1], buffer_a_[2], buffer_g_[0], buffer_g_[1], buffer_g_[2],
-				buffer_m_[0], buffer_m_[1], buffer_m_[2], ((System.currentTimeMillis())) - start_time_);
+				buffer_m_[0], buffer_m_[1], buffer_m_[2], ((System.currentTimeMillis())) - start_time_, authentication);
 	}
 }
